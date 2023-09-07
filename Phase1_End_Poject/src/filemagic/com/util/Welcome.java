@@ -1,4 +1,4 @@
-package filemagic.com.menu;
+package filemagic.com.util;
 
 public class Welcome {
 

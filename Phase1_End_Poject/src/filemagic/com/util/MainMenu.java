@@ -1,83 +1,87 @@
-package filemagic.com.menu;
+package filemagic.com.util;
 
 import java.util.Scanner;
 
 public class MainMenu {
 
-	public static void mainMenu() {
+	public void displayMainMenu() {
 
-		String mainMenuChoice; // user's choice in main menu
+		int mainMenuChoice; // user's choice in main menu
 		String mainMenuCon = "n"; // check if user wants to continue or not
 		Scanner scanner = new Scanner(System.in);
 
+		MainMenu mainMenu = new MainMenu();
+		SubMenu subMenu = new SubMenu();
+
 		do {
-			mainMenuMessage();
-			mainMenuChoice = scanner.nextLine();
+			mainMenu.mainMenuMessage();
+			mainMenuChoice = scanner.nextInt();
+			scanner.nextLine();
 
 			switch (mainMenuChoice) {
-			case "1":
+			case 1:
 				System.out.println(" ------------------------------------------- ");
 				System.out.println(" You have entered in display mode ");
 				System.out.println();
 				break;
 
-			case "2":
-				System.out.println(" ------------------------------------------- ");
-				System.out.println(" You have entered in Business level mode ");
-				System.out.println();
-
+			case 2:
+				subMenu.displaySubMenu(scanner);
+				mainMenu.displayMainMenu();
 				break;
 
-			case "0":
-				exitMessasge();
+			case 0:
+				mainMenu.exitMainMenuMessasge();
 				System.exit(0);
 				break;
 
-			default:invalidMainMenuOption();
-			break;
+			default:
+				mainMenu.invalidMainMenuOptionMessage();
+				break;
 			}
+			
 			System.out.println(" *************************************************** ");
-			System.out.println(" Please press y,Y or n,N in order to continue or not");
+			System.out.println(" Please press y or n in order to continue or not to main menu");
 			mainMenuCon = scanner.nextLine();
 
 			if (!mainMenuCon.equalsIgnoreCase("y") && !mainMenuCon.equalsIgnoreCase("n")) {
 				System.out.println(" You have provided an invalid option ");
-				System.out.println(" Valid options are yY and nN ");
+				System.out.println(" Valid options are y/Y and n/N ");
 			}
 
 			System.out.println(" *************************************************** ");
-
+			System.out.println();
+			
 		} while (!mainMenuCon.equalsIgnoreCase("n"));
 
 		scanner.close();
-		exitMessasge();
+		mainMenu.exitMainMenuMessasge();
 
 	}
 
-	public static void exitMessasge() {
-
+	private void exitMainMenuMessasge() {
 		System.out.println(" ------------------------------------------- ");
 		System.out.println(" Thank you for selecting FileMagic App ");
 		System.out.println(" The application has exited ");
 		System.out.println(" ------------------------------------------- ");
 	}
 
-	public static void mainMenuMessage() {
+	private void mainMenuMessage() {
 		System.out.println(" ########################################## ");
 		System.out.println(" FileMagic provides the below options:");
 		System.out.println(" 1: Display the files of a folder in ascending order");
-		System.out.println(" 2: Business level operation (For adding, deleting and searching a file");
+		System.out.println(" 2: Business level operation (For adding, deleting and searching a file)");
 		System.out.println(" 0: To exit from the app");
 		System.out.println(" Please enter your choice <0-2>");
 		System.out.println(" ########################################## ");
 		System.out.println();
 	}
-	
-	public static void invalidMainMenuOption(){
-	System.out.println(" ------------------------------------------- ");
-	System.out.println(" You have provided an invalid option ");
-	System.out.println(" Valid options are 0,1,2 ");
-	System.out.println(" ------------------------------------------- ");
-	System.out.println();
+
+	private void invalidMainMenuOptionMessage() {
+		System.out.println(" ------------------------------------------------ ");
+		System.out.println(" You have provided an invalid option ");
+		System.out.println(" Valid options in main menu are integers from 0-2 ");
+		System.out.println(" ------------------------------------------------ ");
+		System.out.println();
 	}
 }

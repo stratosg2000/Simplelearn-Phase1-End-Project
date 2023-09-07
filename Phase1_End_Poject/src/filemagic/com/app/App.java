@@ -1,6 +1,6 @@
 package filemagic.com.app;
 
-import filemagic.com.menu.*;
+import filemagic.com.util.*;
 
 public class App {
 
@@ -10,7 +10,7 @@ public class App {
 		Welcome wel = new Welcome();
 		wel.displayWelcome();
 
-		MainMenu menu = new MainMenu();
-		menu.mainMenu();
+		MainMenu menuMain = new MainMenu();
+		menuMain.displayMainMenu();
 	}
 }
