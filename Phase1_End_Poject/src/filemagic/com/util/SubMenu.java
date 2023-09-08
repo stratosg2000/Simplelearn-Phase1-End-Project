@@ -1,6 +1,7 @@
 package filemagic.com.util;
 
 import java.util.Scanner;
+import java.util.InputMismatchException;
 
 public class SubMenu {
 
@@ -13,7 +14,21 @@ public class SubMenu {
 
 		do {
 			menuSub.subMenuMessage();
-			businessMenuChoice = scanner.nextInt();
+			
+			try {
+				businessMenuChoice = scanner.nextInt();
+				
+			} catch (InputMismatchException e) {
+				
+				// we pass to switch block the invalid value 999 in order to present an invalid
+				// input
+				// Thus the program will present the same error message in the case of invalid
+				// integer number
+				// or an input mismatch
+
+				businessMenuChoice = 999;
+
+			}
 
 			switch (businessMenuChoice) {
 

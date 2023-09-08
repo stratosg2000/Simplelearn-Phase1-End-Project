@@ -1,6 +1,7 @@
 package filemagic.com.util;
 
 import java.util.Scanner;
+import java.util.InputMismatchException;
 
 public class MainMenu {
 
@@ -8,6 +9,7 @@ public class MainMenu {
 
 		int mainMenuChoice; // user's choice in main menu
 		String mainMenuCon = "n"; // check if user wants to continue or not
+		
 		Scanner scanner = new Scanner(System.in);
 
 		MainMenu mainMenu = new MainMenu();
@@ -15,7 +17,22 @@ public class MainMenu {
 
 		do {
 			mainMenu.mainMenuMessage();
-			mainMenuChoice = scanner.nextInt();
+
+			try {
+				mainMenuChoice = scanner.nextInt();
+
+			} catch (InputMismatchException e) {
+				// TODO Auto-generated catch block
+
+				// we pass to switch block the invalid value 999 in order to present an invalid
+				// input
+				// Thus the program will present the same error message in the case of invalid
+				// integer number
+				// or an input mismatch
+
+				mainMenuChoice = 999;
+			}
+
 			scanner.nextLine();
 
 			switch (mainMenuChoice) {
@@ -39,7 +56,7 @@ public class MainMenu {
 				mainMenu.invalidMainMenuOptionMessage();
 				break;
 			}
-			
+
 			System.out.println(" *************************************************** ");
 			System.out.println(" Please press y or n in order to continue or not to main menu");
 			mainMenuCon = scanner.nextLine();
@@ -51,7 +68,7 @@ public class MainMenu {
 
 			System.out.println(" *************************************************** ");
 			System.out.println();
-			
+
 		} while (!mainMenuCon.equalsIgnoreCase("n"));
 
 		scanner.close();
@@ -61,7 +78,7 @@ public class MainMenu {
 
 	private void exitMainMenuMessasge() {
 		System.out.println(" ------------------------------------------- ");
-		System.out.println(" Thank you for selecting FileMagic App ");
+		System.out.println(" Thank you for using FileMagic App ");
 		System.out.println(" The application has exited ");
 		System.out.println(" ------------------------------------------- ");
 	}
