@@ -2,6 +2,7 @@ package filemagic.com.util;
 
 import java.util.Scanner;
 import java.util.InputMismatchException;
+import filemagic.com.service.Service;
 
 public class MainMenu {
 
@@ -13,7 +14,8 @@ public class MainMenu {
 		Scanner scanner = new Scanner(System.in);
 
 		MainMenu mainMenu = new MainMenu();
-		SubMenu subMenu = new SubMenu();
+		SubMenu mainSubMenu = new SubMenu();
+		Service mainMenuServ = new Service();
 
 		do {
 			mainMenu.mainMenuMessage();
@@ -37,13 +39,11 @@ public class MainMenu {
 
 			switch (mainMenuChoice) {
 			case 1:
-				System.out.println(" ------------------------------------------- ");
-				System.out.println(" You have entered in display mode ");
-				System.out.println();
+				 mainMenuServ.serviceApp(scanner, "DISPLAY");
 				break;
 
 			case 2:
-				subMenu.displaySubMenu(scanner);
+				mainSubMenu.displaySubMenu(scanner);
 				mainMenu.displayMainMenu();
 				break;
 

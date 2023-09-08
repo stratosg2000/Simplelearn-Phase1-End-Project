@@ -1,6 +1,9 @@
 package filemagic.com.util;
 
 import java.util.Scanner;
+
+import filemagic.com.service.Service;
+
 import java.util.InputMismatchException;
 
 public class SubMenu {
@@ -11,7 +14,8 @@ public class SubMenu {
 		String businessMenuCon = "n";
 
 		SubMenu menuSub = new SubMenu();
-
+		Service subServ = new Service();
+		
 		do {
 			menuSub.subMenuMessage();
 			
@@ -33,22 +37,15 @@ public class SubMenu {
 			switch (businessMenuChoice) {
 
 			case 1:
-				System.out.println(" ------------------------------------------- ");
-				System.out.println(" You have entered Creating a file mode ");
-				System.out.println(" ------------------------------------------- ");
-
+				subServ.serviceApp(scanner, "CREATION");
 				break;
 
 			case 2:
-				System.out.println(" ------------------------------------------- ");
-				System.out.println(" You have entered Deleting a file mode ");
-				System.out.println(" ------------------------------------------- ");
+				subServ.serviceApp(scanner, "DELETION");
 				break;
 
 			case 3:
-				System.out.println(" ------------------------------------------- ");
-				System.out.println(" You have entered Searching a file mode ");
-				System.out.println(" ------------------------------------------- ");
+				subServ.serviceApp(scanner, "SEARCHING");
 				break;
 
 			case 0:
