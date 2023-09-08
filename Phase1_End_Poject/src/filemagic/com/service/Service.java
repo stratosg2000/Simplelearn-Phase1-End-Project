@@ -9,17 +9,16 @@ public class Service {
 
 	public void serviceApp(Scanner scanner, String operation) {
 		// TODO Auto-generated method stub
-		
+
 		String directoryPath;
-		
+
 		initialServiceMessage(operation);
-		
+
 		directoryPath = scanner.nextLine();
-		System.out.println("The provided path is: " +directoryPath);
-	
+		System.out.println("The provided path is: " + directoryPath);
+
 		File directory = new File(directoryPath);
 
-		
 		if (validateDirectory(directory) == true) {
 
 			switch (operation) {
@@ -29,13 +28,14 @@ public class Service {
 				break;
 
 			case "CREATING":
-				String filenameToCreate = retrieveFilename(scanner);
-				createFile(directoryPath, filenameToCreate);
+				String fileToCreate = retrieveFilename(scanner);
+				createFile(directoryPath, fileToCreate);
 				break;
-//
-//			case "deleting":
-//				deleteFile(file, businnessFileName);
-//				break;
+
+			case "DELETING":
+				String fileToDelete = retrieveFilename(scanner);
+				deleteFile(directoryPath, fileToDelete);
+				break;
 //
 //			case "searching":
 //				searchFile(file, businnessFileName, businessDirectoryPath);
@@ -57,7 +57,8 @@ public class Service {
 			System.out.println("Please provide the path of the directory for " + message + " the files");
 		} else {
 			System.out.println("Please provide the path of the directory for " + message + " your file");
-		};
+		}
+		;
 
 		System.out.println(
 				"An example of a path in WINDOWS is C:\\Users\\strat\\REPOS\\Simplelearn-Phase1-End-Project\\ProjectDir");
@@ -123,5 +124,33 @@ public class Service {
 			}
 		}
 
-	};
+	}
+
+	private void deleteFile(String userDirectory, String deleteFileName) {
+
+		String fullPath = userDirectory + File.separator + deleteFileName;
+		File file = new File(fullPath);
+
+		if (!file.exists()) {
+			System.out.println("The file " + deleteFileName + " was not found in the specified directory");
+		} else {
+
+			// Delete an existing file in the given directory
+
+			try {
+
+				boolean deleted = file.delete();
+				if (deleted) {
+					System.out
+							.println(" File " + deleteFileName + " has been successfully deleted in " + userDirectory);
+				} else {
+					System.out.println(" File deletion failed.");
+				}
+			} catch (Exception e) {
+				System.out.println("Something went wrong ......");
+				e.printStackTrace();
+			}
+		}
+
+	}
 }

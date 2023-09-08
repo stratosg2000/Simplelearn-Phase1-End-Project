@@ -49,7 +49,7 @@ public class SubMenu {
 				break;
 
 			case 0:
-				exitSubMenuMessasge();
+				businessMenuCon="n";
 				break;
 
 			default:
