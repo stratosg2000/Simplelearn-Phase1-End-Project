@@ -36,11 +36,12 @@ public class Service {
 				String fileToDelete = retrieveFilename(scanner);
 				deleteFile(directoryPath, fileToDelete);
 				break;
-//
-//			case "searching":
-//				searchFile(file, businnessFileName, businessDirectoryPath);
-//				break;
-//
+
+			case "SEARCHING":
+				String fileToSearch = retrieveFilename(scanner);
+				searchFile(directoryPath, fileToSearch);
+				break;
+
 			default:
 				System.out.println(" Something gone wrong ... invalid input value in Service class ");
 				break;
@@ -119,7 +120,7 @@ public class Service {
 					System.out.println(" File creation failed.");
 				}
 			} catch (IOException e) {
-				System.out.println("Something went wrong ......");
+				System.out.println("Something went wrong during creation ......");
 				e.printStackTrace();
 			}
 		}
@@ -147,10 +148,20 @@ public class Service {
 					System.out.println(" File deletion failed.");
 				}
 			} catch (Exception e) {
-				System.out.println("Something went wrong ......");
+				System.out.println("Something went wrong during deletion......");
 				e.printStackTrace();
 			}
 		}
 
 	}
+	
+	private void searchFile(String userDirectory, String searchFileName) {
+		String fullPath = userDirectory + File.separator + searchFileName;
+		File file = new File(fullPath);
+
+		if (!file.exists()) {
+			System.out.println("The file " + searchFileName + " was not found in the specified directory");
+		} else {System.out.println("The file " + searchFileName + " was found in the specified directory");
+}
+}
 }
