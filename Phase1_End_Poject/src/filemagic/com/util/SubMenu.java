@@ -11,16 +11,16 @@ public class SubMenu {
 	public void displaySubMenu(Scanner scanner) {
 		// TODO Auto-generated method stub
 		int businessMenuChoice;
-		String businessMenuCon = "n";
+		String businessMenuCon = "y";
 
-		SubMenu menuSub = new SubMenu();
 		Service subServ = new Service();
 		
 		do {
-			menuSub.subMenuMessage();
+			 subMenuMessage();
 			
 			try {
 				businessMenuChoice = scanner.nextInt();
+				scanner.nextLine();
 				
 			} catch (InputMismatchException e) {
 				
@@ -37,11 +37,11 @@ public class SubMenu {
 			switch (businessMenuChoice) {
 
 			case 1:
-				subServ.serviceApp(scanner, "CREATION");
+				subServ.serviceApp(scanner, "CREATING");
 				break;
 
 			case 2:
-				subServ.serviceApp(scanner, "DELETION");
+				subServ.serviceApp(scanner, "DELETING");
 				break;
 
 			case 3:
@@ -49,11 +49,11 @@ public class SubMenu {
 				break;
 
 			case 0:
-				menuSub.exitSubMenuMessasge();
+				exitSubMenuMessasge();
 				break;
 
 			default:
-				menuSub.invalidMainMenuOptionMessage();
+				invalidMainMenuOptionMessage();
 				break;
 			}
 //          We want the below code block not to be executed when user has already selected not to 
@@ -61,23 +61,22 @@ public class SubMenu {
 			
 			if (businessMenuChoice != 0) {
 
-				scanner.nextLine();
-
-				System.out.println(" *************************************************** ");
+				System.out.println(" --------------------------------------------------------------------");
 				System.out.println(" Please press y or n in order to continue or not to business sub menu");
 				businessMenuCon = scanner.nextLine();
 
 				if (!businessMenuCon.equalsIgnoreCase("y") && !businessMenuCon.equalsIgnoreCase("n")) {
 					System.out.println(" You have provided an invalid option ");
-					System.out.println(" Valid options are y/Y and n/N ");
+					System.out.println(" Valid options are y or Y and n or N ");
+					businessMenuCon="y";
 				}
 
-				System.out.println(" *************************************************** ");
+				System.out.println(" --------------------------------------------------------------------");
 				System.out.println();
-				menuSub.exitSubMenuMessasge();
-			}
+				}
 
-		} while (!businessMenuCon.equalsIgnoreCase("n"));
+		} while (businessMenuCon.equalsIgnoreCase("y"));
+		exitSubMenuMessasge();
 	}
 
 	private void subMenuMessage() {

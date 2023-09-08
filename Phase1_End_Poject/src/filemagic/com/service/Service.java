@@ -1,6 +1,7 @@
 package filemagic.com.service;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -8,24 +9,29 @@ public class Service {
 
 	public void serviceApp(Scanner scanner, String operation) {
 		// TODO Auto-generated method stub
-		Service serv = new Service();
-
-		serv.initialServiceMessage(operation);
-		String directoryPath = scanner.nextLine();
-
+		
+		String directoryPath;
+		
+		initialServiceMessage(operation);
+		
+		directoryPath = scanner.nextLine();
+		System.out.println("The provided path is: " +directoryPath);
+	
 		File directory = new File(directoryPath);
 
-		if (serv.validateDirectory(directory) == true) {
+		
+		if (validateDirectory(directory) == true) {
 
 			switch (operation) {
 
-			case "DISPLAY":
-				serv.displayFiles(directory);
+			case "DISPLAYING":
+				displayFiles(directory);
 				break;
 
-//			case "creating":
-//				createFile(file, businnessFileName, businessDirectoryPath);
-//				break;
+			case "CREATING":
+				String filenameToCreate = retrieveFilename(scanner);
+				createFile(directoryPath, filenameToCreate);
+				break;
 //
 //			case "deleting":
 //				deleteFile(file, businnessFileName);
@@ -43,20 +49,30 @@ public class Service {
 
 	}
 
-	private void initialServiceMessage(String operation) {
-		System.out.println(" =================================================================================================== ");
-		System.out.println("Please provide the path of the directory for the file " + operation + ".");
-		System.out.println("An example of a path in WINDOWS is C:\\Users\\strat\\REPOS\\Simplelearn-Phase1-End-Project\\ProjectDir");
-		System.out.println(" ==================================================================================================== ");
+	private void initialServiceMessage(String message) {
+		System.out.println(
+				" =================================================================================================== ");
+
+		if (message == "DISPLAYING") {
+			System.out.println("Please provide the path of the directory for " + message + " the files");
+		} else {
+			System.out.println("Please provide the path of the directory for " + message + " your file");
+		};
+
+		System.out.println(
+				"An example of a path in WINDOWS is C:\\Users\\strat\\REPOS\\Simplelearn-Phase1-End-Project\\ProjectDir");
+		System.out.println(
+				" ==================================================================================================== ");
 	}
 
-	private boolean validateDirectory(File directory) {
-		if (directory.exists() && directory.isDirectory()) {
+	private boolean validateDirectory(File directoryName) {
+		if (directoryName.exists() && directoryName.isDirectory()) {
 			System.out.println("The directory indeed exists.");
 			return true;
 		} else {
 			System.out.println(" ----------------------------------------------");
 			System.out.println("The provided directory does not exist ");
+			System.out.println(" ------------------------------------------------");
 			return false;
 		}
 	}
@@ -71,5 +87,41 @@ public class Service {
 				System.out.println(file.getName());
 			}
 		}
+		System.out.println(" ----------------------------------------------");
 	}
+
+	private String retrieveFilename(Scanner retrieveScanner) {
+
+		System.out.println(" Please provide the name of the filename  ");
+		String fileName = retrieveScanner.nextLine();
+		System.out.println(" ----------------------------------------------");
+		return fileName;
+
+	}
+
+	private void createFile(String userDirectory, String createFileName) {
+		String fullPath = userDirectory + File.separator + createFileName;
+		File file = new File(fullPath);
+
+		if (file.exists()) {
+			System.out.println("The file " + createFileName + " was already found in the specified directory");
+		} else {
+
+			// Create a new empty file in the given directory
+			try {
+
+				boolean created = file.createNewFile();
+				if (created) {
+					System.out
+							.println(" File " + createFileName + " has been created successfully in " + userDirectory);
+				} else {
+					System.out.println(" File creation failed.");
+				}
+			} catch (IOException e) {
+				System.out.println("Something went wrong ......");
+				e.printStackTrace();
+			}
+		}
+
+	};
 }

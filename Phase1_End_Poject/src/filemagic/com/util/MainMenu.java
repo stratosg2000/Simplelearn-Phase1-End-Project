@@ -39,7 +39,7 @@ public class MainMenu {
 
 			switch (mainMenuChoice) {
 			case 1:
-				 mainMenuServ.serviceApp(scanner, "DISPLAY");
+				 mainMenuServ.serviceApp(scanner, "DISPLAYING");
 				break;
 
 			case 2:
