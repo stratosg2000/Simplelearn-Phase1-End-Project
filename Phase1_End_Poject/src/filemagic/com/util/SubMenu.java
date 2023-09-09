@@ -14,16 +14,15 @@ public class SubMenu {
 		String businessMenuCon = "y";
 
 		Service subServ = new Service();
-		
+
 		do {
-			 subMenuMessage();
-			
+			subMenuMessage();
+
 			try {
 				businessMenuChoice = scanner.nextInt();
-				scanner.nextLine();
-				
+
 			} catch (InputMismatchException e) {
-				
+
 				// we pass to switch block the invalid value 999 in order to present an invalid
 				// input
 				// Thus the program will present the same error message in the case of invalid
@@ -33,6 +32,7 @@ public class SubMenu {
 				businessMenuChoice = 999;
 
 			}
+			scanner.nextLine();
 
 			switch (businessMenuChoice) {
 
@@ -49,7 +49,7 @@ public class SubMenu {
 				break;
 
 			case 0:
-				businessMenuCon="n";
+				businessMenuCon = "n";
 				break;
 
 			default:
@@ -58,22 +58,21 @@ public class SubMenu {
 			}
 //          We want the below code block not to be executed when user has already selected not to 
 //          continue in business sub menu which means  businessMenuChoice is equal to zero
-			
-			if (businessMenuChoice != 0) {
 
+			if (businessMenuChoice != 0) {
 				System.out.println(" --------------------------------------------------------------------");
-				System.out.println(" Please press y or n in order to continue or not to business sub menu");
+				System.out.println(" Please press Y or N in order to continue or not to business sub menu.");
 				businessMenuCon = scanner.nextLine();
 
 				if (!businessMenuCon.equalsIgnoreCase("y") && !businessMenuCon.equalsIgnoreCase("n")) {
-					System.out.println(" You have provided an invalid option ");
-					System.out.println(" Valid options are y or Y and n or N ");
-					businessMenuCon="y";
+					System.out.println(" You have provided an invalid option. ");
+					System.out.println(" Valid options are Y and N. ");
+					businessMenuCon = "y";
 				}
 
 				System.out.println(" --------------------------------------------------------------------");
 				System.out.println();
-				}
+			}
 
 		} while (businessMenuCon.equalsIgnoreCase("y"));
 		exitSubMenuMessasge();
@@ -82,25 +81,25 @@ public class SubMenu {
 	private void subMenuMessage() {
 		System.out.println(" ############################################# ");
 		System.out.println(" FileMagic provides the below business options:");
-		System.out.println(" 1: To create a file");
-		System.out.println(" 2: To delete a file");
-		System.out.println(" 3: To search a file");
-		System.out.println(" 0: Exit sub menu");
-		System.out.println(" Please enter your choice <0-3>");
+		System.out.println(" 1: To create a file.");
+		System.out.println(" 2: To delete a file.");
+		System.out.println(" 3: To search a file.");
+		System.out.println(" 0: Exit sub menu.");
+		System.out.println(" Please enter your choice <0-3>.");
 		System.out.println(" ############################################# ");
 	}
 
 	private void invalidMainMenuOptionMessage() {
 		System.out.println(" ------------------------------------------------ ");
-		System.out.println(" You have provided an invalid option ");
-		System.out.println(" Valid options in sub menu are integers from 0-3 ");
+		System.out.println(" You have provided an invalid option. ");
+		System.out.println(" Valid options in sub menu are integers from 0-3. ");
 		System.out.println(" ------------------------------------------------ ");
 		System.out.println();
 	}
 
 	private void exitSubMenuMessasge() {
 		System.out.println(" ------------------------------------------- ");
-		System.out.println(" You have exited from sub menu");
+		System.out.println(" You have exited from sub menu.");
 		System.out.println(" ------------------------------------------- ");
 		System.out.println();
 	}

@@ -55,9 +55,9 @@ public class Service {
 				" =================================================================================================== ");
 
 		if (message == "DISPLAYING") {
-			System.out.println("Please provide the path of the directory for " + message + " the files");
+			System.out.println("Please provide the path of the directory for " + message + " the files.");
 		} else {
-			System.out.println("Please provide the path of the directory for " + message + " your file");
+			System.out.println("Please provide the path of the directory for " + message + " your file.");
 		}
 		;
 
@@ -73,28 +73,35 @@ public class Service {
 			return true;
 		} else {
 			System.out.println(" ----------------------------------------------");
-			System.out.println("The provided directory does not exist ");
+			System.out.println("The provided directory does not exist. ");
 			System.out.println(" ------------------------------------------------");
 			return false;
 		}
 	}
 
 	private void displayFiles(File directory) {
-		File[] files = directory.listFiles();
-		Arrays.sort(files);
-		System.out.println(" ----------------------------------------------");
-		System.out.println("Below is the list of files in ascending order: ");
-		for (File file : files) {
-			if (file.isFile()) {
-				System.out.println(file.getName());
+
+		try {
+			File[] files = directory.listFiles();
+			Arrays.sort(files);
+			System.out.println(" ----------------------------------------------");
+			System.out.println("Below is the list of files in ascending order: ");
+			for (File file : files) {
+				if (file.isFile()) {
+					System.out.println(file.getName());
+				}
 			}
+			System.out.println(" ----------------------------------------------");
+
+		} catch (Exception e) {
+			System.out.println("You may not have the permissions to list the files.");
+			e.printStackTrace();
 		}
-		System.out.println(" ----------------------------------------------");
 	}
 
 	private String retrieveFilename(Scanner retrieveScanner) {
 
-		System.out.println(" Please provide the name of the filename  ");
+		System.out.println(" Please provide the name of the filename.  ");
 		String fileName = retrieveScanner.nextLine();
 		System.out.println(" ----------------------------------------------");
 		return fileName;
@@ -120,7 +127,7 @@ public class Service {
 					System.out.println(" File creation failed.");
 				}
 			} catch (IOException e) {
-				System.out.println("Something went wrong during creation ......");
+				System.out.println("Something went wrong during file creation ......");
 				e.printStackTrace();
 			}
 		}
@@ -133,35 +140,29 @@ public class Service {
 		File file = new File(fullPath);
 
 		if (!file.exists()) {
-			System.out.println("The file " + deleteFileName + " was not found in the specified directory");
+			System.out.println("The file " + deleteFileName + " was not found in the specified directory.");
 		} else {
 
 			// Delete an existing file in the given directory
 
-			try {
-
-				boolean deleted = file.delete();
-				if (deleted) {
-					System.out
-							.println(" File " + deleteFileName + " has been successfully deleted in " + userDirectory);
-				} else {
-					System.out.println(" File deletion failed.");
-				}
-			} catch (Exception e) {
-				System.out.println("Something went wrong during deletion......");
-				e.printStackTrace();
+			boolean deleted = file.delete();
+			if (deleted) {
+				System.out.println(" File " + deleteFileName + " has been successfully deleted in " + userDirectory);
+			} else {
+				System.out.println(" File deletion failed.");
 			}
+			System.out.println("the value of deleted flag is: " + deleted);
 		}
-
 	}
-	
+
 	private void searchFile(String userDirectory, String searchFileName) {
 		String fullPath = userDirectory + File.separator + searchFileName;
 		File file = new File(fullPath);
 
 		if (!file.exists()) {
-			System.out.println("The file " + searchFileName + " was not found in the specified directory");
-		} else {System.out.println("The file " + searchFileName + " was found in the specified directory");
-}
-}
+			System.out.println("The file " + searchFileName + " was not found in the specified directory.");
+		} else {
+			System.out.println("The file " + searchFileName + " was found in the specified directory.");
+		}
+	}
 }

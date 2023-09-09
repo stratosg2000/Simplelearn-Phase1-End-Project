@@ -10,15 +10,14 @@ public class MainMenu {
 
 		int mainMenuChoice; // user's choice in main menu
 		String mainMenuCon = "n"; // check if user wants to continue or not
-		
+
 		Scanner scanner = new Scanner(System.in);
 
-		MainMenu mainMenu = new MainMenu();
 		SubMenu mainSubMenu = new SubMenu();
 		Service mainMenuServ = new Service();
 
 		do {
-			mainMenu.mainMenuMessage();
+			mainMenuMessage();
 
 			try {
 				mainMenuChoice = scanner.nextInt();
@@ -39,31 +38,31 @@ public class MainMenu {
 
 			switch (mainMenuChoice) {
 			case 1:
-				 mainMenuServ.serviceApp(scanner, "DISPLAYING");
+				mainMenuServ.serviceApp(scanner, "DISPLAYING");
 				break;
 
 			case 2:
 				mainSubMenu.displaySubMenu(scanner);
-				mainMenu.displayMainMenu();
+				displayMainMenu();
 				break;
 
 			case 0:
-				mainMenu.exitMainMenuMessasge();
+				exitMainMenuMessasge();
 				System.exit(0);
 				break;
 
 			default:
-				mainMenu.invalidMainMenuOptionMessage();
+				invalidMainMenuOptionMessage();
 				break;
 			}
 
 			System.out.println(" *************************************************** ");
-			System.out.println(" Please press y or n in order to continue or not to main menu");
+			System.out.println(" Please press Y or N in order to continue or not to main menu.");
 			mainMenuCon = scanner.nextLine();
 
 			if (!mainMenuCon.equalsIgnoreCase("y") && !mainMenuCon.equalsIgnoreCase("n")) {
-				System.out.println(" You have provided an invalid option ");
-				System.out.println(" Valid options are y/Y and n/N ");
+				System.out.println(" You have provided an invalid option. ");
+				System.out.println(" Valid options are Y and N. ");
 			}
 
 			System.out.println(" *************************************************** ");
@@ -72,23 +71,23 @@ public class MainMenu {
 		} while (!mainMenuCon.equalsIgnoreCase("n"));
 
 		scanner.close();
-		mainMenu.exitMainMenuMessasge();
+		exitMainMenuMessasge();
 
 	}
 
 	private void exitMainMenuMessasge() {
 		System.out.println(" ------------------------------------------- ");
-		System.out.println(" Thank you for using FileMagic App ");
-		System.out.println(" The application has exited ");
+		System.out.println(" Thank you for using FileMagic App. ");
+		System.out.println(" The application has exited. ");
 		System.out.println(" ------------------------------------------- ");
 	}
 
 	private void mainMenuMessage() {
 		System.out.println(" ########################################## ");
 		System.out.println(" FileMagic provides the below options:");
-		System.out.println(" 1: Display the files of a folder in ascending order");
-		System.out.println(" 2: Business level operation (For adding, deleting and searching a file)");
-		System.out.println(" 0: To exit from the app");
+		System.out.println(" 1: Display the files of a folder in ascending order.");
+		System.out.println(" 2: Business level operation (for adding, deleting and searching a file).");
+		System.out.println(" 0: To exit from the app.");
 		System.out.println(" Please enter your choice <0-2>");
 		System.out.println(" ########################################## ");
 		System.out.println();
@@ -96,8 +95,8 @@ public class MainMenu {
 
 	private void invalidMainMenuOptionMessage() {
 		System.out.println(" ------------------------------------------------ ");
-		System.out.println(" You have provided an invalid option ");
-		System.out.println(" Valid options in main menu are integers from 0-2 ");
+		System.out.println(" You have provided an invalid option. ");
+		System.out.println(" Valid options in main menu are integers from 0-2. ");
 		System.out.println(" ------------------------------------------------ ");
 		System.out.println();
 	}

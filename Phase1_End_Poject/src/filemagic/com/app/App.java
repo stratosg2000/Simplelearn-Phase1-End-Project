@@ -8,17 +8,16 @@ public class App {
 		// TODO Auto-generated method stub
 
 		try {
-			
+
 			Welcome wel = new Welcome();
 			wel.displayWelcome();
 
 			MainMenu menuMain = new MainMenu();
 			menuMain.displayMainMenu();
-			
-			
+
 		} catch (Exception e) {
-	System.out.println("Something gone wrong .....");	
-	System.out.println("File Magic is exiting .....");
+			System.out.println("Something gone wrong .....");
+			System.out.println("File Magic is exiting .....");
 			e.printStackTrace();
 		}
 	}
