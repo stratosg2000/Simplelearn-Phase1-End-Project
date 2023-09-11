@@ -53,7 +53,7 @@ public class SubMenu {
 				break;
 
 			default:
-				invalidMainMenuOptionMessage();
+				invalidSubMenuOptionMessage();
 				break;
 			}
 //          We want the below code block not to be executed when user has already selected not to 
@@ -89,7 +89,7 @@ public class SubMenu {
 		System.out.println(" ############################################# ");
 	}
 
-	private void invalidMainMenuOptionMessage() {
+	private void invalidSubMenuOptionMessage() {
 		System.out.println(" ------------------------------------------------ ");
 		System.out.println(" You have provided an invalid option. ");
 		System.out.println(" Valid options in sub menu are integers from 0-3. ");
