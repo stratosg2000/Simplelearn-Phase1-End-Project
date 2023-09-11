@@ -74,7 +74,7 @@ public class Service {
 		} else {
 			System.out.println(" ----------------------------------------------");
 			System.out.println("The provided directory does not exist. ");
-			System.out.println(" ------------------------------------------------");
+			System.out.println(" -----------------------------------------------");
 			return false;
 		}
 	}
@@ -151,7 +151,7 @@ public class Service {
 			} else {
 				System.out.println(" File deletion failed.");
 			}
-			System.out.println("the value of deleted flag is: " + deleted);
+			
 		}
 	}
 

@@ -1,0 +1,446 @@
+==========
+APP CLASS
+==========
+
+package filemagic.com.app;
+
+import filemagic.com.util.*;
+
+public class App {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		try {
+
+			Welcome wel = new Welcome();
+			wel.displayWelcome();
+
+			MainMenu menuMain = new MainMenu();
+			menuMain.displayMainMenu();
+
+		} catch (Exception e) {
+			System.out.println("Something gone wrong .....");
+			System.out.println("File Magic is exiting .....");
+			e.printStackTrace();
+		}
+	}
+}
+
+==============
+Service Class
+==============
+
+package filemagic.com.service;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Service {
+
+	public void serviceApp(Scanner scanner, String operation) {
+		// TODO Auto-generated method stub
+
+		String directoryPath;
+
+		initialServiceMessage(operation);
+
+		directoryPath = scanner.nextLine();
+		System.out.println("The provided path is: " + directoryPath);
+
+		File directory = new File(directoryPath);
+
+		if (validateDirectory(directory) == true) {
+
+			switch (operation) {
+
+			case "DISPLAYING":
+				displayFiles(directory);
+				break;
+
+			case "CREATING":
+				String fileToCreate = retrieveFilename(scanner);
+				createFile(directoryPath, fileToCreate);
+				break;
+
+			case "DELETING":
+				String fileToDelete = retrieveFilename(scanner);
+				deleteFile(directoryPath, fileToDelete);
+				break;
+
+			case "SEARCHING":
+				String fileToSearch = retrieveFilename(scanner);
+				searchFile(directoryPath, fileToSearch);
+				break;
+
+			default:
+				System.out.println(" Something gone wrong ... invalid input value in Service class ");
+				break;
+			}
+		}
+
+	}
+
+	private void initialServiceMessage(String message) {
+		System.out.println(
+				" =================================================================================================== ");
+
+		if (message == "DISPLAYING") {
+			System.out.println("Please provide the path of the directory for " + message + " the files.");
+		} else {
+			System.out.println("Please provide the path of the directory for " + message + " your file.");
+		}
+		;
+
+		System.out.println(
+				"An example of a path in WINDOWS is C:\\Users\\strat\\REPOS\\Simplelearn-Phase1-End-Project\\ProjectDir");
+		System.out.println(
+				" ==================================================================================================== ");
+	}
+
+	private boolean validateDirectory(File directoryName) {
+		if (directoryName.exists() && directoryName.isDirectory()) {
+			System.out.println("The directory indeed exists.");
+			return true;
+		} else {
+			System.out.println(" ----------------------------------------------");
+			System.out.println("The provided directory does not exist. ");
+			System.out.println(" -----------------------------------------------");
+			return false;
+		}
+	}
+
+	private void displayFiles(File directory) {
+
+		try {
+			File[] files = directory.listFiles();
+			Arrays.sort(files);
+			System.out.println(" ----------------------------------------------");
+			System.out.println("Below is the list of files in ascending order: ");
+			for (File file : files) {
+				if (file.isFile()) {
+					System.out.println(file.getName());
+				}
+			}
+			System.out.println(" ----------------------------------------------");
+
+		} catch (Exception e) {
+			System.out.println("You may not have the permissions to list the files.");
+			e.printStackTrace();
+		}
+	}
+
+	private String retrieveFilename(Scanner retrieveScanner) {
+
+		System.out.println(" Please provide the name of the filename.  ");
+		String fileName = retrieveScanner.nextLine();
+		System.out.println(" ----------------------------------------------");
+		return fileName;
+
+	}
+
+	private void createFile(String userDirectory, String createFileName) {
+		String fullPath = userDirectory + File.separator + createFileName;
+		File file = new File(fullPath);
+
+		if (file.exists()) {
+			System.out.println("The file " + createFileName + " was already found in the specified directory");
+		} else {
+
+			// Create a new empty file in the given directory
+			try {
+
+				boolean created = file.createNewFile();
+				if (created) {
+					System.out
+							.println(" File " + createFileName + " has been created successfully in " + userDirectory);
+				} else {
+					System.out.println(" File creation failed.");
+				}
+			} catch (IOException e) {
+				System.out.println("Something went wrong during file creation ......");
+				e.printStackTrace();
+			}
+		}
+
+	}
+
+	private void deleteFile(String userDirectory, String deleteFileName) {
+
+		String fullPath = userDirectory + File.separator + deleteFileName;
+		File file = new File(fullPath);
+
+		if (!file.exists()) {
+			System.out.println("The file " + deleteFileName + " was not found in the specified directory.");
+		} else {
+
+			// Delete an existing file in the given directory
+
+			boolean deleted = file.delete();
+			if (deleted) {
+				System.out.println(" File " + deleteFileName + " has been successfully deleted in " + userDirectory);
+			} else {
+				System.out.println(" File deletion failed.");
+			}
+			
+		}
+	}
+
+	private void searchFile(String userDirectory, String searchFileName) {
+		String fullPath = userDirectory + File.separator + searchFileName;
+		File file = new File(fullPath);
+
+		if (!file.exists()) {
+			System.out.println("The file " + searchFileName + " was not found in the specified directory.");
+		} else {
+			System.out.println("The file " + searchFileName + " was found in the specified directory.");
+		}
+	}
+}
+
+
+
+===============
+MainMenu Class
+===============
+
+package filemagic.com.util;
+
+import java.util.Scanner;
+import java.util.InputMismatchException;
+import filemagic.com.service.Service;
+
+public class MainMenu {
+
+	public void displayMainMenu() {
+
+		int mainMenuChoice; // user's choice in main menu
+		String mainMenuCon = "n"; // check if user wants to continue or not
+
+		Scanner scanner = new Scanner(System.in);
+
+		SubMenu mainSubMenu = new SubMenu();
+		Service mainMenuServ = new Service();
+
+		do {
+			mainMenuMessage();
+
+			try {
+				mainMenuChoice = scanner.nextInt();
+
+			} catch (InputMismatchException e) {
+				// TODO Auto-generated catch block
+
+				// we pass to switch block the invalid value 999 in order to present an invalid
+				// input
+				// Thus the program will present the same error message in the case of invalid
+				// integer number
+				// or an input mismatch
+
+				mainMenuChoice = 999;
+			}
+
+			scanner.nextLine();
+
+			switch (mainMenuChoice) {
+			case 1:
+				mainMenuServ.serviceApp(scanner, "DISPLAYING");
+				break;
+
+			case 2:
+				mainSubMenu.displaySubMenu(scanner);
+				displayMainMenu();
+				break;
+
+			case 0:
+				exitMainMenuMessasge();
+				System.exit(0);
+				break;
+
+			default:
+				invalidMainMenuOptionMessage();
+				break;
+			}
+
+			System.out.println(" *************************************************** ");
+			System.out.println(" Please press Y or N in order to continue or not to main menu.");
+			mainMenuCon = scanner.nextLine();
+
+			if (!mainMenuCon.equalsIgnoreCase("y") && !mainMenuCon.equalsIgnoreCase("n")) {
+				System.out.println(" You have provided an invalid option. ");
+				System.out.println(" Valid options are Y and N. ");
+			}
+
+			System.out.println(" *************************************************** ");
+			System.out.println();
+
+		} while (!mainMenuCon.equalsIgnoreCase("n"));
+
+		scanner.close();
+		exitMainMenuMessasge();
+
+	}
+
+	private void exitMainMenuMessasge() {
+		System.out.println(" ------------------------------------------- ");
+		System.out.println(" Thank you for using FileMagic App. ");
+		System.out.println(" The application has exited. ");
+		System.out.println(" ------------------------------------------- ");
+	}
+
+	private void mainMenuMessage() {
+		System.out.println(" ########################################## ");
+		System.out.println(" FileMagic provides the below options:");
+		System.out.println(" 1: Display the files of a folder in ascending order.");
+		System.out.println(" 2: Business level operation (for adding, deleting and searching a file).");
+		System.out.println(" 0: To exit from the app.");
+		System.out.println(" Please enter your choice <0-2>");
+		System.out.println(" ########################################## ");
+		System.out.println();
+	}
+
+	private void invalidMainMenuOptionMessage() {
+		System.out.println(" ------------------------------------------------ ");
+		System.out.println(" You have provided an invalid option. ");
+		System.out.println(" Valid options in main menu are integers from 0-2. ");
+		System.out.println(" ------------------------------------------------ ");
+		System.out.println();
+	}
+}
+
+
+
+===========
+SubMenu
+===========
+
+package filemagic.com.util;
+
+import java.util.Scanner;
+
+import filemagic.com.service.Service;
+
+import java.util.InputMismatchException;
+
+public class SubMenu {
+
+	public void displaySubMenu(Scanner scanner) {
+		// TODO Auto-generated method stub
+		int businessMenuChoice;
+		String businessMenuCon = "y";
+
+		Service subServ = new Service();
+
+		do {
+			subMenuMessage();
+
+			try {
+				businessMenuChoice = scanner.nextInt();
+
+			} catch (InputMismatchException e) {
+
+				// we pass to switch block the invalid value 999 in order to present an invalid
+				// input
+				// Thus the program will present the same error message in the case of invalid
+				// integer number
+				// or an input mismatch
+
+				businessMenuChoice = 999;
+
+			}
+			scanner.nextLine();
+
+			switch (businessMenuChoice) {
+
+			case 1:
+				subServ.serviceApp(scanner, "CREATING");
+				break;
+
+			case 2:
+				subServ.serviceApp(scanner, "DELETING");
+				break;
+
+			case 3:
+				subServ.serviceApp(scanner, "SEARCHING");
+				break;
+
+			case 0:
+				businessMenuCon = "n";
+				break;
+
+			default:
+				invalidMainMenuOptionMessage();
+				break;
+			}
+//          We want the below code block not to be executed when user has already selected not to 
+//          continue in business sub menu which means  businessMenuChoice is equal to zero
+
+			if (businessMenuChoice != 0) {
+				System.out.println(" --------------------------------------------------------------------");
+				System.out.println(" Please press Y or N in order to continue or not to business sub menu.");
+				businessMenuCon = scanner.nextLine();
+
+				if (!businessMenuCon.equalsIgnoreCase("y") && !businessMenuCon.equalsIgnoreCase("n")) {
+					System.out.println(" You have provided an invalid option. ");
+					System.out.println(" Valid options are Y and N. ");
+					businessMenuCon = "y";
+				}
+
+				System.out.println(" --------------------------------------------------------------------");
+				System.out.println();
+			}
+
+		} while (businessMenuCon.equalsIgnoreCase("y"));
+		exitSubMenuMessasge();
+	}
+
+	private void subMenuMessage() {
+		System.out.println(" ############################################# ");
+		System.out.println(" FileMagic provides the below business options:");
+		System.out.println(" 1: To create a file.");
+		System.out.println(" 2: To delete a file.");
+		System.out.println(" 3: To search a file.");
+		System.out.println(" 0: Exit sub menu.");
+		System.out.println(" Please enter your choice <0-3>.");
+		System.out.println(" ############################################# ");
+	}
+
+	private void invalidMainMenuOptionMessage() {
+		System.out.println(" ------------------------------------------------ ");
+		System.out.println(" You have provided an invalid option. ");
+		System.out.println(" Valid options in sub menu are integers from 0-3. ");
+		System.out.println(" ------------------------------------------------ ");
+		System.out.println();
+	}
+
+	private void exitSubMenuMessasge() {
+		System.out.println(" ------------------------------------------- ");
+		System.out.println(" You have exited from sub menu.");
+		System.out.println(" ------------------------------------------- ");
+		System.out.println();
+	}
+
+}
+
+
+
+==================
+Welcome Class
+=============
+package filemagic.com.util;
+
+public class Welcome {
+
+	public void displayWelcome() {
+		System.out.println(" ------------------------------------------------------------- ");
+		System.out.println(" Welcome to the new application deleloped by Lockers Pvt. Ltd");
+		System.out.println(" Application's Name: FileMagic ");
+		System.out.println(" Developer's name: Efstratios Gaitanidis ");
+		System.out.println(" Contact details: efstratios.gaitanidis@vodafone.com");
+		System.out.println(" ------------------------------------------------------------- ");
+		System.out.println();
+	}
+}
+
